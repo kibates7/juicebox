@@ -38,6 +38,7 @@ usersRouter.post('/register', async (req, res, next) => {
             expiresIn: '1w'
         });
 
+        
         res.send({
             message: 'thank you for sigining up',
             token
@@ -59,15 +60,17 @@ usersRouter.post('/login', async (req, res, next) => {
 
    try {
        const user = await getUserByUsername(username);
-
+       
        if(user && user.password === password) {
            
-           const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET)
+           const token = jwt.sign({id: user.id, username: user.username}, process.env.JWT_SECRET,  {expiresIn: '1w'})
+           
            res.send({ message: "you are logged in!", token: token});
        }else {
+           
            next({
                name: "IncorrectCredentialsError",
-               message: "Username or password is incorrect"
+               message: "Username or password is incorrect",
            });
        }
    } catch (error) {
