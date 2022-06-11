@@ -1,5 +1,5 @@
 const express = require('express');
-const { post } = require('.');
+// const { post } = require('.');
 const postsRouter = express.Router();
 
 
